@@ -1,0 +1,14 @@
+package com.logesh.accessories_Product_Management_System.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.logesh.accessories_Product_Management_System.dto.Accessories;
+import com.logesh.accessories_Product_Management_System.dto.Product;
+
+public interface AccessoriesRepo extends JpaRepository<Accessories, Integer>
+{
+	
+	public Accessories findByproduct(String product);
+	
+
+}

@@ -1,0 +1,7 @@
+package com.logesh.accessories_Product_Management_System.dto;
+
+@Entity
+@Table(name = "product_accessories")
+public class ProductAccessory {
+
+}

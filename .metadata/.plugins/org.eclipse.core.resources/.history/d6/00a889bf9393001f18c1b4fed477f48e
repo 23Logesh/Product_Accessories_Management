@@ -1,0 +1,51 @@
+package com.logesh.accessories_Product_Management_System.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.logesh.accessories_Product_Management_System.dto.Product;
+import com.logesh.accessories_Product_Management_System.service.ProductService;
+
+@Controller
+@RequestMapping("Product")
+public class ProductController {
+	
+	@Autowired
+	ProductService service;
+
+    @PostMapping("/add")
+    public Product addProduct(@RequestBody Product product) {
+        return service.addProduct(product);
+    }
+
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return service.getAllProducts();
+    }
+
+    @GetMapping("/{id}")
+    public Product getProductById(@RequestParam int id) {
+        return service.getProductById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+    }
+
+    @PutMapping("/{id}")
+    public Product updateProduct(@RequestParam int id, @RequestBody Product productDetails) {
+        return service.updateProduct(id, productDetails);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@RequestParam int id) {
+        service.deleteProduct(id);
+    }
+
+
+}

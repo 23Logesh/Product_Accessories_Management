@@ -1,0 +1,30 @@
+package com.logesh.accessories_Product_Management_System.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("Accessories")
+public class AccessoriesController 
+{
+
+	 @Autowired
+	    private AccessoryService accessoryService;
+
+	    @PostMapping("/add")
+	    public Accessory addAccessory(@RequestBody Accessory accessory) {
+	        return accessoryService.addAccessory(accessory);
+	    }
+
+	    @GetMapping
+	    public List<Accessory> getAllAccessories() {
+	        return accessoryService.getAllAccessories();
+	    }
+
+	    @DeleteMapping("/{id}")
+	    public void deleteAccessory(@PathVariable Long id) {
+	        accessoryService.deleteAccessory(id);
+	    }
+	
+}

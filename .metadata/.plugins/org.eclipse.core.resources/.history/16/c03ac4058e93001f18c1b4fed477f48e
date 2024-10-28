@@ -1,0 +1,9 @@
+package com.logesh.accessories_Product_Management_System.controller;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+@RequestMapping("Product")
+public class ProductController {
+
+}

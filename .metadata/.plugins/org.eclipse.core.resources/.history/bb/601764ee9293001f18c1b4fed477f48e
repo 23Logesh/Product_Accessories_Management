@@ -1,0 +1,10 @@
+package com.logesh.accessories_Product_Management_System.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("Accessories")
+public class AccessoriesController {
+
+}

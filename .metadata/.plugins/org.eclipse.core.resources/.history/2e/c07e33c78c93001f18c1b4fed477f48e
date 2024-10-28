@@ -1,0 +1,5 @@
+package com.logesh.accessories_Product_Management_System.repository;
+
+public interface AccessoryRepo extends JpaRepository<Accessory, Integer> {
+
+}

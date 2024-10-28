@@ -1,0 +1,21 @@
+package com.logesh.accessories_Product_Management_System.dto;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Accessories {
+
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	private String model;
+	private String product;
+	private String make;
+	private double cost;
+	private String accessoryFor;
+	private int Quantity;
+}

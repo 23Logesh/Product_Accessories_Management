@@ -1,0 +1,72 @@
+package com.logesh.accessories_Product_Management_System.service;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.logesh.accessories_Product_Management_System.dto.Accessories;
+import com.logesh.accessories_Product_Management_System.dto.Product;
+import com.logesh.accessories_Product_Management_System.repository.AccessoriesRepo;
+import com.logesh.accessories_Product_Management_System.repository.ProductRepo;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
+@Service
+public class AccessoriesService {
+
+    @Autowired
+    private AccessoriesRepo accessoryRepository;
+    
+    @Autowired
+    private ProductRepo prepo;
+    
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public ResponseEntity<Accessories> addAccessory(Accessories accessory, int productId) {
+       Product p = prepo.findById(productId).get();
+       if(p!=null) {
+    	   accessory.setAccessoryfor(p.getProduct());
+    	   Accessories saved = accessoryRepository.save(accessory);
+    	   p.getAccessories().add(saved);
+    	   prepo.save(p);
+    	   return new ResponseEntity<>(accessory, HttpStatus.CREATED);
+       }
+       return null; // throw product not found exception
+        
+    }
+
+    public ResponseEntity<List<Accessories>> getAllAccessories() {
+        List<Accessories> accessories = accessoryRepository.findAll();
+        return new ResponseEntity<>(accessories, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> deleteAccessory(int id) {
+        if (accessoryRepository.existsById(id)) {
+        	 
+            accessoryRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    public ResponseEntity<Accessories> updateAccessoryByProduct(String product, Accessories accessoryDetails) {
+        return accessoryRepository.findByproduct(product)
+            .map(accessory -> {
+                // Update fields
+                accessory.setModel(accessoryDetails.getModel());
+                accessory.setProduct(accessoryDetails.getProduct());
+                accessory.setMake(accessoryDetails.getMake());
+                accessory.setCost(accessoryDetails.getCost());
+                accessory.setQuantity(accessoryDetails.getQuantity());
+                Accessories updatedAccessory = accessoryRepository.save(accessory);
+                return new ResponseEntity<>(updatedAccessory, HttpStatus.OK);
+            })
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+}
