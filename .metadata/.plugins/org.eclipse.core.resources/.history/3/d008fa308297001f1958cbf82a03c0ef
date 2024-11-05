@@ -64,7 +64,8 @@ public class AccessoriesService {
 			// Delete the accessory
 			accessoryRepository.deleteById(assecoryid);
 			return new ResponseEntity<>(HttpStatus.OK); // Return success response
-		}  
+		} else {
+		}
 		return null;
 	}
 
